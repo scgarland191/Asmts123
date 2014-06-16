@@ -1,0 +1,11 @@
+{
+  "name": "Asmt1",
+  "version": "0.0.0",
+  "description": "Stuff for Asmt1",
+  "main": "fileWrite.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
