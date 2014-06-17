@@ -27,8 +27,8 @@ stdin.addListener("data", function(d) {
 				}else {
 					var weather = res.body.currently.summary
 					var end = new Date().getTime();
-					var time = end - start;
-					console.log('Time taken to obtain coordinates and weather: ' + time);
+					var time = (end - start)/1000;
+					console.log('Time taken to obtain coordinates and weather: '+time+' seconds');
 					console.log("Current conditions:"+weather);
 					var myDate = new Date(res.body.currently.time*1000);
 					myDate = myDate.toLocaleString();
