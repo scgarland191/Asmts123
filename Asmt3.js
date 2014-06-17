@@ -7,6 +7,7 @@ var stdin = process.openStdin();
 console.log("Enter your address:")
 stdin.addListener("data", function(d) {
     var address = d.toString().substring(0, d.length-1);
+    var start = new Date().getTime();
     var googleAddress = address.replace(/ /g, "+");
     var googleURL = 'https://maps.googleapis.com/maps/api/geocode/json?address='+googleAddress
 	googleReq = request(googleURL);
@@ -17,7 +18,7 @@ stdin.addListener("data", function(d) {
 			var lat = res.body.results[0].geometry.viewport.northeast.lat;
 			var lng = res.body.results[0].geometry.viewport.northeast.lng;
 
-			console.log(lat+", "+lng);
+			console.log("Coordinates: "+lat+", "+lng);
 			var forecastURL = 'https://api.forecast.io/forecast/138d58623b6d2fba8931d322cfc95612/'+lat+','+lng
 			forecastReq = request(forecastURL);
 			forecastReq.get('/').expect(200, function(err, res){
@@ -25,10 +26,13 @@ stdin.addListener("data", function(d) {
 					console.log('Something has gone wrong while getting the forecast!\n Error: '+err);
 				}else {
 					var weather = res.body.currently.summary
-					console.log(weather);
+					var end = new Date().getTime();
+					var time = end - start;
+					consonle.log('Time taken to obtain coordinates and weather: ' + time);
+					console.log("Current conditions:"+weather);
 					var myDate = new Date(res.body.currently.time*1000);
 					myDate = myDate.toLocaleString();
-					console.log(myDate);
+					console.log("Date and time: "+myDate);
 					var text = address+'\n'+lat+', '+lng+'\n'+weather+'\n'+myDate+'\n\n'
 					fs.appendFile(filename, text, function (err) {
 						if (err){
